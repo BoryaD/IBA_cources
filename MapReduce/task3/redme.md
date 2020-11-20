@@ -1,0 +1,1 @@
+Command to run: cat file.input | ./map.py | sort | ./reduce.py
