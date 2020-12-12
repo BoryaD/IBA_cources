@@ -3,43 +3,44 @@
 2) Зайти в Kibana -> Dev Tools
 3) Создать индекс elasticsearch_cluster с динамическим маппингом с информацией об инстансах созданного ELK стека (в каких регионах созданы,
  какой продукт, для Elasticsearch – какой вид нода, является ли текущим мастером). Информацию берите из deployment на клауде. 
+ ```json
  PUT /elasticsearch_cluster
  #
 POST elasticsearch_cluster/_doc/1
-{
-  "region": "us-central1-a",
-  "product": "APM",
-  "elasticsearch_info": null
+{ 
+  "region": "us-central1-a", 
+  "product": "APM", 
+  "elasticsearch_info": null 
+} 
+#
+ POST elasticsearch_cluster/_doc/2 
+{ 
+  "region": "us-central1-a", 
+  "product": "Elasticsearch", 
+  "elasticsearch_info": { 
+      "data": true, 
+      "master_eligible": false, 
+      "coordinating": true, 
+      "master": true, 
+      "ingest": true 
+  }   
 }
 #
- POST elasticsearch_cluster/_doc/2
-{
-  "region": "us-central1-a",
-  "product": "Elasticsearch",
-  "elasticsearch_info": {
-      "data": true,
-      "master_eligible": false,
-      "coordinating": true,
-      "master": true,
-      "ingest": true
-  }
-}
-#
- POST elasticsearch_cluster/_doc/3
-{
-  "region": "us-central1-b",
-  "product": "Elasticsearch",
-  "elasticsearch_info": {
-      "data": false,
-      "master_eligible": true,
-      "coordinating": true,
-      "master": false,
+ POST elasticsearch_cluster/_doc/3 
+{ 
+  "region": "us-central1-b", 
+  "product": "Elasticsearch", 
+  "elasticsearch_info": { 
+      "data": false, 
+      "master_eligible": true, 
+      "coordinating": true, 
+      "master": false, 
       "ingest": true
   }
 }
 #
  POST elasticsearch_cluster/_doc/4
-{
+{ 
   "region": "us-central1-b",
   "product": "Kibana",
   "elasticsearch_info": null
@@ -315,3 +316,4 @@ GET books/_search
   }
 }
 Данна агрегация обЪединяет книги написанные в одном году и хранит сумму страниц, и сортирует их по сумме страниц.
+ ```
